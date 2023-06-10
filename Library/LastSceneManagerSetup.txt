@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Ainas/Beigas.unity
+- path: Assets/Ainas/Spele.unity
   isLoaded: 1
   isActive: 1

@@ -16,6 +16,12 @@ public class AinuParsledzejs : MonoBehaviour {
 	{
 		SceneManager.LoadScene (2, LoadSceneMode.Single);
 	}
+	public void UzBeigam(){
+		SceneManager.LoadScene (3, LoadSceneMode.Single);
+	}
+	public void UzAtbildem(){
+		SceneManager.LoadScene (4, LoadSceneMode.Single);
+	}
 	public void Apturet()
 	{
 		Application.Quit ();

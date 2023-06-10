@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Skripti\AinuParsledzejs.cs" />
-     <Compile Include="Assets\Skripti\NepareizasAtb.cs" />
+     <Compile Include="Assets\Skripti\BeigasScene.cs" />
+     <Compile Include="Assets\Skripti\NepareizAtbJaut.cs" />
+     <Compile Include="Assets\Skripti\PareizAtbJaut.cs" />
      <Compile Include="Assets\Skripti\Quizz.cs" />
      <Compile Include="Assets\Skripti\TimerSkripts.cs" />
  <Reference Include="UnityEngine.UI">

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class PareizAtbJaut : MonoBehaviour
 {
@@ -12,16 +13,19 @@ public class PareizAtbJaut : MonoBehaviour
 
 		if (correctQuestions != null)
 		{
-			correctQuestionsText.text = "Pareizi atbildétie jautájumi:\n";
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("Pareizi atbildētie jautājumi:");
 
 			foreach (Question question in correctQuestions.questions)
 			{
-				correctQuestionsText.text += "\n" + question.question;
+				sb.AppendLine(question.question);
 			}
+
+			correctQuestionsText.text = sb.ToString();
 		}
 		else
 		{
-			correctQuestionsText.text = "Nav pareizi atbildētu jautājumu.";
+			correctQuestionsText.text = "Nav neviena pareizi atbildēta jautājuma.";
 		}
 	}
 }

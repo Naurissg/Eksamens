@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 public class Quizz : MonoBehaviour
 {
-	public Question[] questions;
-	public Text questionText;
-	public Button[] answerButtons;
-	public Image feedbackImage;
-	public Text timerText;
+	public Question[] Jautajums;
+	public Text JautajumaText;
+	public Button[] AtbildesPogas;
+	public Image AtsauksmesAttels;
+	public Text timerTexts;
 
-	public Sprite correctImage;
-	public Sprite incorrectImage;
+	public Sprite PareizaBild;
+	public Sprite NepareizaBilde;
 
 	private int currentQuestionIndex = 0;
 	private float timer = 0f;
@@ -31,37 +31,37 @@ public class Quizz : MonoBehaviour
 			timer += Time.deltaTime;
 			int minutes = Mathf.FloorToInt(timer / 60f);
 			int seconds = Mathf.FloorToInt(timer % 60f);
-			timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+			timerTexts.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 		}
 	}
 
 	private void DisplayQuestion(int questionIndex)
 	{
-		questionText.text = questions[questionIndex].question;
+		JautajumaText.text = Jautajums[questionIndex].question;
 
-		for (int i = 0; i < answerButtons.Length; i++)
+		for (int i = 0; i < AtbildesPogas.Length; i++)
 		{
-			answerButtons[i].GetComponentInChildren<Text>().text = questions[questionIndex].answers[i];
+			AtbildesPogas[i].GetComponentInChildren<Text>().text = Jautajums[questionIndex].answers[i];
 		}
 	}
 
 	public void AnswerButtonClicked(int buttonIndex)
 	{
-		if (questions[currentQuestionIndex].correctAnswerIndex == buttonIndex)
+		if (Jautajums[currentQuestionIndex].correctAnswerIndex == buttonIndex)
 		{
 			Debug.Log("Correct!");
-			correctAnsweredQuestions.Add(questions[currentQuestionIndex]);
-			ShowFeedbackImage(correctImage);
+			correctAnsweredQuestions.Add(Jautajums[currentQuestionIndex]);
+			ShowFeedbackImage(PareizaBild);
 		}
 		else
 		{
 			Debug.Log("Wrong!");
-			ShowFeedbackImage(incorrectImage);
+			ShowFeedbackImage(NepareizaBilde);
 		}
 
 		currentQuestionIndex++;
 
-		if (currentQuestionIndex >= questions.Length)
+		if (currentQuestionIndex >= Jautajums.Length)
 		{
 			QuizCompleted();
 			return;
@@ -72,14 +72,14 @@ public class Quizz : MonoBehaviour
 
 	private void DisplayNextQuestion()
 	{
-		feedbackImage.gameObject.SetActive(false);
+		AtsauksmesAttels.gameObject.SetActive(false);
 		DisplayQuestion(currentQuestionIndex);
 	}
 
 	private void ShowFeedbackImage(Sprite image)
 	{
-		feedbackImage.sprite = image;
-		feedbackImage.gameObject.SetActive(true);
+		AtsauksmesAttels.sprite = image;
+		AtsauksmesAttels.gameObject.SetActive(true);
 	}
 
 	private void QuizCompleted()

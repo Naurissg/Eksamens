@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class NepareizAtbJaut : MonoBehaviour
 {
@@ -12,16 +13,19 @@ public class NepareizAtbJaut : MonoBehaviour
 
 		if (wrongQuestions != null)
 		{
-			wrongQuestionsText.text = "Nepareizi atbildétie jautájumi:\n";
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("Nepareizi atbildētie jautājumi:");
 
 			foreach (Question question in wrongQuestions.questions)
 			{
-				wrongQuestionsText.text += "\n" + question.question;
+				sb.AppendLine(question.question);
 			}
+
+			wrongQuestionsText.text = sb.ToString();
 		}
 		else
 		{
-			wrongQuestionsText.text = "Nav nevienu nepareizi atbildétu jautájumu.";
+			wrongQuestionsText.text = "Nav neviena nepareizi atbildēta jautājuma.";
 		}
 	}
 }

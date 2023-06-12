@@ -4,28 +4,29 @@ using System.Text;
 
 public class PareizAtbJaut : MonoBehaviour
 {
-	public Text correctQuestionsText;
+	public Text PareizJautTexts;
 
 	private void Start()
 	{
-		string correctQuestionsJson = PlayerPrefs.GetString("CorrectAnsweredQuestions");
-		QuestionList correctQuestions = JsonUtility.FromJson<QuestionList>(correctQuestionsJson);
+		string pareizoJautajumu = PlayerPrefs.GetString("PareiziAtbildetsJautajums");
+		AtbilzuList pareiziJaut = JsonUtility.FromJson<AtbilzuList>(pareizoJautajumu);
 
-		if (correctQuestions != null)
+		if (pareiziJaut != null)
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.AppendLine("Pareizi atbildētie jautājumi:");
+			sb.AppendLine("Pareizi atbildētie jautājumi:\n");
 
-			foreach (Question question in correctQuestions.questions)
+			foreach (Jautajumi jautjaums in pareiziJaut.jautajumi)
 			{
-				sb.AppendLine(question.question);
+				sb.AppendLine(jautjaums.Jautajums);
 			}
 
-			correctQuestionsText.text = sb.ToString();
+			PareizJautTexts.text = sb.ToString();
 		}
 		else
 		{
-			correctQuestionsText.text = "Nav neviena pareizi atbildēta jautājuma.";
+			PareizJautTexts.text = "Nav neviena pareizi atbildēta jautājuma.";
 		}
+
 	}
 }

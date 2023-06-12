@@ -1,13 +1,14 @@
-﻿// TimerSkripts.cs
+﻿// TimerSkripts
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class TimerSkripts : MonoBehaviour
 {
-	public Text timerText;
-	private float elapsedTime = 0f;
+	public Text timerTexts;
+	private float pagajisLaiks = 0f;
 	public Quizz quizz;
-	public Text finalTime;
+	public Text beiguLaiks;
 
 	private void Start()
 	{
@@ -16,25 +17,25 @@ public class TimerSkripts : MonoBehaviour
 
 	private void Update()
 	{
-		if (!quizz.quizCompleted)
+		if (!quizz.quizPabeigts)
 		{
-			elapsedTime += Time.deltaTime;
-			UpdateTimerUI(elapsedTime);
+			pagajisLaiks += Time.deltaTime;
+			AtjauninatTimerUI(pagajisLaiks);
 		}
 	}
 
-	private void UpdateTimerUI(float elapsedTime)
+	private void AtjauninatTimerUI(float pagajisLaiks)
 	{
-		int minutes = Mathf.FloorToInt(elapsedTime / 60);
-		int seconds = Mathf.FloorToInt(elapsedTime % 60);
-		int milliseconds = Mathf.FloorToInt((elapsedTime * 1000) % 1000);
+		int minutes = Mathf.FloorToInt(pagajisLaiks / 60);
+		int seconds = Mathf.FloorToInt(pagajisLaiks % 60);
+		int milliseconds = Mathf.FloorToInt((pagajisLaiks * 1000) % 1000);
 
-		timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
-		finalTime.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+		timerTexts.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+		beiguLaiks.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
 	}
 
 	public void StartTimer()
 	{
-		elapsedTime = 0f;
+		pagajisLaiks = 0f;
 	}
 }

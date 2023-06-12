@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿// TimerSkripts
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class Quizz : MonoBehaviour
 {
-	public Question[] Jautajums;
+	public Jautajumi[] Jautajums;
 	public Text JautajumaText;
 	public Button[] AtbildesPogas;
 	public Image AtsauksmesAttels;
@@ -14,102 +15,108 @@ public class Quizz : MonoBehaviour
 	public Sprite PareizaBild;
 	public Sprite NepareizaBilde;
 
-	private int currentQuestionIndex = 0;
-	private float timer = 0f;
-	public bool quizCompleted = false;
-	private List<Question> correctAnsweredQuestions = new List<Question>();
+	private int JautajumaIndex = 0;
+	private float Timeris = 0f;
+	public bool quizPabeigts = false;
+	private List<Jautajumi> pareizoAtbilzuJautajumi = new List<Jautajumi>();
+	private List<Jautajumi> nepareizoAtbilzuJautajumi = new List<Jautajumi>();
 
 	private void Start()
 	{
-		DisplayQuestion(currentQuestionIndex);
+		ParaditJautajumu(JautajumaIndex);
 	}
 
 	private void Update()
 	{
-		if (!quizCompleted)
+		if (!quizPabeigts)
 		{
-			timer += Time.deltaTime;
-			int minutes = Mathf.FloorToInt(timer / 60f);
-			int seconds = Mathf.FloorToInt(timer % 60f);
+			Timeris += Time.deltaTime;
+			int minutes = Mathf.FloorToInt(Timeris / 60f);
+			int seconds = Mathf.FloorToInt(Timeris % 60f);
 			timerTexts.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 		}
 	}
 
-	private void DisplayQuestion(int questionIndex)
+	private void ParaditJautajumu(int JautajumaIndex)
 	{
-		JautajumaText.text = Jautajums[questionIndex].question;
+		JautajumaText.text = Jautajums[JautajumaIndex].Jautajums;
 
 		for (int i = 0; i < AtbildesPogas.Length; i++)
 		{
-			AtbildesPogas[i].GetComponentInChildren<Text>().text = Jautajums[questionIndex].answers[i];
+			AtbildesPogas[i].GetComponentInChildren<Text>().text = Jautajums[JautajumaIndex].Atbildes[i];
 		}
 	}
 
-	public void AnswerButtonClicked(int buttonIndex)
+	public void AtbildesPogaNospiesta(int PoguIndex)
 	{
-		if (Jautajums[currentQuestionIndex].correctAnswerIndex == buttonIndex)
+		if (Jautajums[JautajumaIndex].pareizasAtbildesIndeks == PoguIndex)
 		{
-			Debug.Log("Correct!");
-			correctAnsweredQuestions.Add(Jautajums[currentQuestionIndex]);
-			ShowFeedbackImage(PareizaBild);
+			Debug.Log("Pareizi!");
+			pareizoAtbilzuJautajumi.Add(Jautajums[JautajumaIndex]);
+			AtbildesBilde(PareizaBild);
 		}
 		else
 		{
-			Debug.Log("Wrong!");
-			ShowFeedbackImage(NepareizaBilde);
+			Debug.Log("Nepareizi!");
+			nepareizoAtbilzuJautajumi.Add(Jautajums[JautajumaIndex]);
+			AtbildesBilde(NepareizaBilde);
 		}
 
-		currentQuestionIndex++;
+		JautajumaIndex++;
 
-		if (currentQuestionIndex >= Jautajums.Length)
+		if (JautajumaIndex >= Jautajums.Length)
 		{
-			QuizCompleted();
+			PabeigtQuiz();
 			return;
 		}
 
-		Invoke("DisplayNextQuestion", 2f);
+		Invoke("ParadaNakamoJaut", 2f);
 	}
 
-	private void DisplayNextQuestion()
+	private void ParadaNakamoJaut()
 	{
 		AtsauksmesAttels.gameObject.SetActive(false);
-		DisplayQuestion(currentQuestionIndex);
+		ParaditJautajumu(JautajumaIndex);
 	}
 
-	private void ShowFeedbackImage(Sprite image)
+	private void AtbildesBilde(Sprite image)
 	{
 		AtsauksmesAttels.sprite = image;
 		AtsauksmesAttels.gameObject.SetActive(true);
 	}
 
-	private void QuizCompleted()
+	private void PabeigtQuiz()
 	{
-		quizCompleted = true;
-		PlayerPrefs.SetFloat("FinalTime", timer);
+		quizPabeigts = true;
+		PlayerPrefs.SetFloat("BeiguLaiks", Timeris);
 
 		// Save the correct answered questions to player preferences
-		string correctQuestionsJson = JsonUtility.ToJson(new QuestionList(correctAnsweredQuestions));
-		PlayerPrefs.SetString("CorrectAnsweredQuestions", correctQuestionsJson);
+		string pareizoJautajumu = JsonUtility.ToJson(new AtbilzuList(pareizoAtbilzuJautajumi));
+		PlayerPrefs.SetString("PareiziAtbildetsJautajums", pareizoJautajumu);
+
+		string nepareizoJautajumu = JsonUtility.ToJson(new AtbilzuList(nepareizoAtbilzuJautajumi));
+		PlayerPrefs.SetString("NepareizieAtbildesJautajumi", nepareizoJautajumu);
+
 
 		SceneManager.LoadScene("Beigas");
 	}
 }
 
 [System.Serializable]
-public class Question
+public class Jautajumi
 {
-	public string question;
-	public string[] answers;
-	public int correctAnswerIndex;
+	public string Jautajums;
+	public string[] Atbildes;
+	public int pareizasAtbildesIndeks;
 }
 
 [System.Serializable]
-public class QuestionList
+public class AtbilzuList
 {
-	public List<Question> questions;
+	public List<Jautajumi> jautajumi;
 
-	public QuestionList(List<Question> questionList)
+	public AtbilzuList(List<Jautajumi> jautajumuList)
 	{
-		questions = questionList;
+		jautajumi = jautajumuList;
 	}
 }

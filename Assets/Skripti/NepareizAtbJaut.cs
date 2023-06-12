@@ -4,28 +4,28 @@ using System.Text;
 
 public class NepareizAtbJaut : MonoBehaviour
 {
-	public Text wrongQuestionsText;
+	public Text NepareizuJautText;
 
 	private void Start()
 	{
-		string wrongQuestionsJson = PlayerPrefs.GetString("WrongAnsweredQuestions");
-		QuestionList wrongQuestions = JsonUtility.FromJson<QuestionList>(wrongQuestionsJson);
+		string nepareizoJautajumu = PlayerPrefs.GetString("NepareizieAtbildesJautajumi");
+		AtbilzuList NepareizieJaut = JsonUtility.FromJson<AtbilzuList>(nepareizoJautajumu);
 
-		if (wrongQuestions != null)
+		if (NepareizieJaut != null)
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.AppendLine("Nepareizi atbildētie jautājumi:");
+			sb.AppendLine("Nepareizi atbildētie jautājumi:\n");
 
-			foreach (Question question in wrongQuestions.questions)
+			foreach (Jautajumi jautajums in NepareizieJaut.jautajumi)
 			{
-				sb.AppendLine(question.question);
+				sb.AppendLine(jautajums.Jautajums);
 			}
 
-			wrongQuestionsText.text = sb.ToString();
+			NepareizuJautText.text = sb.ToString();
 		}
 		else
 		{
-			wrongQuestionsText.text = "Nav neviena nepareizi atbildēta jautājuma.";
+			NepareizuJautText.text = "Nav neviena nepareizi atbildēta jautājuma.";
 		}
 	}
 }

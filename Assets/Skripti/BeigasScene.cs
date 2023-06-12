@@ -3,19 +3,19 @@ using UnityEngine.UI;
 
 public class BeigasScene : MonoBehaviour
 {
-	public Text finalTime;
+	public Text beiguLaiks;
 
 	private void Start()
 	{
-		float finalTimeValue = PlayerPrefs.GetFloat("FinalTime", 0f); // Retrieve the final time from player preferences
-		DisplayFinalTime(finalTimeValue);
+		float beiguLaiksVērtība = PlayerPrefs.GetFloat("BeiguLaiks", 0f); // Retrieve the final time from player preferences
+		ParādītBeiguLaiku(beiguLaiksVērtība);
 	}
 
-	private void DisplayFinalTime(float time)
+	private void ParādītBeiguLaiku(float time)
 	{
 		int minutes = Mathf.FloorToInt(time / 60);
 		int seconds = Mathf.FloorToInt(time % 60);
 		int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
-		finalTime.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+		beiguLaiks.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
 	}
 }

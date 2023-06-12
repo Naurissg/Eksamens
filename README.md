@@ -10,4 +10,5 @@ Mācību materiāls un elektronisks tests par tēmu "Cikls ar priekšnosacījumu
 - [x] Iespēja apskatīties nepareizi atbildētos jautājumus
 - [x] Iespēja apskatīties pareizi atbildētos jautājumus
 - [x] Iespēja atsākt spēli no jauna 
+- [x] Pievienoti skaņas efekti
 - [ ] Pabeigts Projekts
